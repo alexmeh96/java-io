@@ -1,6 +1,7 @@
 package ru.mehcoder.io;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class FileIO {
 
@@ -11,6 +12,8 @@ public class FileIO {
 
         readWriteFileByOwnByteBuffer("test.zip", "test2.zip");
         readWriteFileByOwnCharBuffer("test.xml", "test2.xml");
+
+        pipelineReader("test.xml");
 
 //        readWriteFileByByte("test.zip", "test2.zip");
 //        readWriteFileByChar("test.xml", "test2.xml");
@@ -96,6 +99,21 @@ public class FileIO {
             int c;
             while ((c = r.read()) != -1) {
                 w.write(c);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // преобразование чтение из байтового > символьный > символьный буфер
+    public static void pipelineReader(String readFilename) {
+        try (FileInputStream fis = new FileInputStream(readFilename);
+             Reader r = new InputStreamReader(fis, StandardCharsets.UTF_8);
+             BufferedReader br = new BufferedReader(r)) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

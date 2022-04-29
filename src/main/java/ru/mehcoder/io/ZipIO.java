@@ -13,7 +13,7 @@ public class ZipIO {
         writeZip("test.zip");
         readZip("test.zip");
 
-        createZip("test.zip", ".");
+//        createZip("test.zip", ".");
     }
 
     public static void readZip(String filename) {
